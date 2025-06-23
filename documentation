@@ -1,0 +1,141 @@
+# Secure Notes Manager - Project Documentation
+
+## Overview
+
+The **Secure Notes Manager** is a Tkinter-based GUI application designed to provide a secure and efficient way to store, manage, and organize personal notes. It includes category management, password protection, encryption, and a modern dark/light theme toggle.
+
+---
+
+## Features
+
+* **Secure login screen** (Password protected)
+* **Encrypted note storage** using AES (handled via `Encryption.py`)
+* **Add, view, edit, and delete notes**
+* **Categorize notes** dynamically
+* **Custom-themed GUI** with toggle support for Dark and Light modes
+* **SQLite3-based local database** (handled via `dbfile.py`)
+
+---
+
+## Project Structure
+
+* `main.py` - Main GUI and logic
+* `dbfile.py` - Handles database interactions (tables, CRUD operations)
+* `Encryption.py` - Handles encryption and decryption of notes and passwords
+
+---
+
+## GUI Structure
+
+* `frame1` - Login screen
+* `frame2` - Main dashboard (after login)
+
+  * `top_bar` - Navigation bar with buttons (Home, Add Note, Settings, Logout)
+  * `sidebar` - Category-based filtering panel
+  * `main_area` - Displays frames based on user interactions:
+
+    * `h1frame` - Treeview for notes
+    * `h2frame` - Single note display & edit
+    * `h3frame` - Add new category
+    * `nframe` - Add new note
+    * `sframe` - Settings menu
+    * `cpframe` - Change password
+    * `lframe` - Logout screen
+
+---
+
+## Functional Components
+
+### 1. **Themes**
+
+* `theme1()` - Activates dark mode UI
+* `theme2()` - Reverts to system default light theme
+* Theme toggled via a `theme` boolean flag and button in settings
+
+### 2. **Authentication**
+
+* `pw_check()`
+
+  * Compares entered password with encrypted password from DB
+  * On success, transitions to main UI
+
+### 3. **Notes Management**
+
+* `addnotes()` - Displays add note form
+* `save_note()` - Encrypts and saves note to DB
+* `edit_note()` - Encrypts and updates selected note
+* `delete_note()` - Removes selected note from DB and UI
+* `filter_notes(cat)` - Filters notes by category
+* `on_select(event)` - Displays selected note for viewing/editing
+
+### 4. **Categories**
+
+* `add_cat()` - Adds a new category to the sidebar and DB
+* Categories like "All" and "Add Category" are special triggers
+
+### 5. **Settings**
+
+* `setting()` - Opens the settings frame
+* `change_theme()` - Toggles between dark and light themes
+* `goto_cpframe()` - Displays password change form
+* `change_pass()` - Encrypts and saves the new password
+* `goto_sframe()` - Returns from change password to settings
+
+### 6. **Logout and Navigation**
+
+* `logout()` - Goes to logout screen
+* `goto_frame1()` - Returns to login screen
+* `home()` - Displays all notes in the main Treeview
+
+---
+
+## Custom Styling
+
+* Uses `ttk.Style()` to create a customized Treeview
+* All frames and widgets are styled in both themes to ensure visual consistency
+
+---
+
+## Data Flow
+
+1. **Login**: User provides password > validated against encrypted DB password.
+2. **Home View**: Shows all notes > Click loads encrypted content.
+3. **Add/Edit Note**: Content is encrypted before saving.
+4. **Settings**: Change themes or update password.
+
+---
+
+## Future Improvements
+
+* Add search functionality
+* Enable markdown rendering in note viewer
+* Cloud synchronization support
+* User account multi-login management
+
+---
+
+## Requirements
+
+* Python 3.8+
+* Tkinter (comes with Python)
+* `sqlite3` (standard library)
+* Custom encryption module using `cryptography` or similar
+
+---
+
+## Note
+
+For full functionality, the project depends on two modules:
+
+* `dbfile.py`: Handles database creation, insertion, updates, deletion, and password/key storage.
+* `Encryption.py`: Handles encryption/decryption using a secure cipher (e.g., AES)
+
+You can share those files to generate complete documentation including data schema and encryption logic.
+
+---
+
+## Author
+
+*Developed by HR Clasher*
+
+Feel free to customize the documentation headers to suit README or PDF formatting.
