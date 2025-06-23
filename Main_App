@@ -3,7 +3,7 @@ from tkinter import ttk
 import dbfile as db
 import Encryption as en
 
-theme = True
+theme = 0
 def theme1():
     frame2.config(bg="#1e1e1e")
     top_bar.config(bg="#1e1e1e")
@@ -86,6 +86,51 @@ def theme2():
     style.configure("Treeview.Heading",
             background="SystemButtonFace",
             foreground="Black")
+def theme3():
+    frame2.config(bg="#3a3a3a")
+    top_bar.config(bg="#1e1e1e")
+    sidebar.config(bg="#1e1e1e")
+    main_area.config(bg="#1c1c1c")
+    hframe.config(bg="#1c1c1c")
+    h1frame.config(bg="#1c1c1c")
+    h2frame.config(bg="#1c1c1c")
+    h3frame.config(bg="#1c1c1c")
+    sframe.config(bg="#1c1c1c")
+    cpframe.config(bg="#1c1c1c")
+    lframe.config(bg="#1c1c1c")
+    nframe.config(bg="#1c1c1c")
+    for i in range(0, 4):
+        tbbutn[i].config(bg="#1c1c1c",fg="turquoise",bd=4)
+    h2t1.config(bg="SystemButtonFace",fg="Black")
+    h2b1.config(bg="#1c1c1c",fg="turquoise",bd=4)
+    h2b2.config(bg="#1c1c1c",fg="turquoise",bd=4)
+    hl1.config(bg="#1c1c1c",fg="turquoise")
+    h3l1.config(background="#1c1c1c",foreground="turquoise")
+    h3e1.config(background="SystemButtonFace",foreground="Black")
+    h3b1.config(bg="#1c1c1c",fg="turquoise")
+    dropdown.config(bg="#1c1c1c",fg="turquoise")
+    nl1.config(background="#1c1c1c",foreground="turquoise")
+    ne1.config(background="SystemButtonFace",foreground="Black")
+    nl2.config(background="#1c1c1c",foreground="turquoise")
+    ne2.config(bg="SystemButtonFace",fg="Black")
+    nb1.config(bg="#1c1c1c",fg="turquoise",bd=4)
+    sb1.config(bg="#1c1c1c",fg="turquoise",bd=4)
+    sb2.config(bg="#1c1c1c",fg="turquoise",bd=4)
+    cpl1.config(background="#1c1c1c",foreground="turquoise")
+    cpe1.config(background="SystemButtonFace",foreground="Black")
+    cpb1.config(bg="#1c1c1c",fg="turquoise",bd=4)
+    cpb2.config(bg="#1c1c1c",fg="turquoise",bd=4)
+    lb1.config(bg="#1c1c1c",fg="turquoise",bd=4)
+    for i in range(0, len(categories)):
+        sbbtn[i].config(bg="#1c1c1c",fg="turquoise",bd=4)
+    style.configure("Treeview",
+            background = "#1c1c1c",
+            foreground = "turquoise",
+            fieldbackground= "#3a3a3a")
+    style.configure("Treeview.Heading",
+            background="1c1c1c",
+            foreground="turquoise")
+    dropdown["menu"].config(bg="#3a3a3a",fg="turquoise")
 
 # fetching categories
 categories = db.fetch_all_notes("categories")
@@ -127,12 +172,13 @@ def change_pass():
 
 def change_theme():
     global theme
-    if(theme == True):
-        theme2()
-        theme = False
-    else:
+    theme = (theme+1) %3
+    if(theme == 0):
         theme1()
-        theme = True
+    elif(theme == 1):
+        theme2()
+    else:
+        theme3()
 
 def goto_sframe():
     cpframe.place_forget()
