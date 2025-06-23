@@ -79,6 +79,13 @@ def theme2():
     lb1.config(bg="#D9D9D9",fg="Black")
     for i in range(0, len(categories)):
         sbbtn[i].config(bg="#D9D9D9",fg="Black")
+    style.configure("Treeview",
+            background = "SystemButtonFace",
+            foreground = "Black",
+            fieldbackground= "SystemButtonFace")
+    style.configure("Treeview.Heading",
+            background="SystemButtonFace",
+            foreground="Black")
 
 # fetching categories
 categories = db.fetch_all_notes("categories")
@@ -94,7 +101,8 @@ key1 = key[0][1].encode()
 def pw_check():
     pas = f1e1.get()
     check = db.read_pass(1)
-    if pas == check[0][1]:
+    pas1 = en.encrypt(pas)
+    if pas1 == check[0][1]:
         frame1.pack_forget()
         frame2.place(relheight=1, relwidth=1)
         f1e1.delete(0, tk.END)
@@ -112,6 +120,7 @@ def goto_cpframe():
 
 def change_pass():
     new_pass = cpe1.get()
+    new_pass = en.encrypt(new_pass)
     db.change_pass(new_pass)
     cpframe.place_forget()
     frame2.place(relheight=1, relwidth=1)
@@ -268,13 +277,21 @@ h1frame = tk.Frame(main_area,bg="#2e2e2e")
 h2frame = tk.Frame(main_area, bg="#2e2e2e")
 h3frame = tk.Frame(main_area, bg="#2e2e2e")
 # => Treeview code
-tree = ttk.Treeview(h1frame, columns=("Title", "Category"), show="headings")
+style = ttk.Style()
+style.theme_use("clam")
+style.configure("Treeview",
+                background = "#2e2e2e",
+                foreground = "White",
+                fieldbackground= "light black")
+style.configure("Treeview.Heading",
+                background="#1c1c1c",
+                foreground="white")
+tree = ttk.Treeview(h1frame, columns=("Title", "Category"), show="headings",style="Treeview")
 tree.heading("Title", text="Title")
 tree.heading("Category", text="Category")
 tree.pack(fill="both", expand=True)
 tree.column("Title", width=150, anchor="w")
 tree.column("Category", width=100, anchor="w")
-
 for n in notes:
     tree.insert("", tk.END, values=n)
 tree.bind("<<TreeviewSelect>>", on_select)
@@ -314,15 +331,16 @@ dropdown.config(bg="#3a3a3a", fg="white" ,
     bd=2,                      
     highlightthickness=0,
     cursor="hand2")
+dropdown["menu"].config(bg="#3a3a3a",fg="White",bd = 0)
 dropdown.place(relx=0.3, rely=0.1)
 #  => labels and entry to get data
 nl1 = ttk.Label(nframe,text="Enter the title: ",background="#2e2e2e",foreground="White", font=("Times New Roman", 12))
 nl1.place(relx=0.0,rely=0.3)
-ne1 = tk.Entry(nframe,font=("Times New Roman", 12),background="#2e2e2e",foreground="White", width=15)
+ne1 = tk.Entry(nframe,font=("Times New Roman", 12),background="#3a3a3a",foreground="White", width=15)
 ne1.place(relx=0.4,rely=0.3)
 nl2 = ttk.Label(nframe,text="Enter the notes: ",background="#2e2e2e",foreground="White", font=("Times New Roman", 12))
 nl2.place(relx=0.0,rely=0.4)
-ne2 = tk.Text(nframe, height=5, width=15,background="#2e2e2e",foreground="White", font=("Times New Roman", 12))
+ne2 = tk.Text(nframe, height=5, width=15,background="#3a3a3a",foreground="White", font=("Times New Roman", 12))
 ne2.place(relx=0.4,rely=0.4)
 #  => button to submit
 nb1 = tk.Button(nframe, text="Save",relief="sunken",width=10, height=1, bg="#3a3a3a", fg="white",cursor="hand2", command=save_note)
